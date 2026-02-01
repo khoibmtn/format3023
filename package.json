@@ -1,0 +1,23 @@
+{
+  "name": "format3023",
+  "version": "1.0.0",
+  "description": "DOCX file processor using OpenXML manipulation",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "test": "node src/test-runner.js"
+  },
+  "dependencies": {
+    "archiver": "^6.0.1",
+    "busboy": "^1.6.0",
+    "express": "^4.18.2",
+    "fast-xml-parser": "^4.3.2",
+    "jszip": "^3.10.1",
+    "multer": "^1.4.5-lts.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
