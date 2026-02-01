@@ -53,42 +53,43 @@
       margin-bottom: 1.5rem;
     }
 
-    .banner {
-      background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
-      color: white;
-      padding: 1.25rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 0;
-    }
-
     .org-name {
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e3a5f;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      margin-bottom: 0.75rem;
-      opacity: 0.95;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
     }
 
     .org-icon {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
+      color: #2563eb;
+    }
+
+    .banner {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      border-radius: 16px;
     }
 
     .logo {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: white;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
 
     .tagline {
-      color: rgba(255, 255, 255, 0.85);
-      font-size: 0.85rem;
-      line-height: 1.5;
-      max-width: 500px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      max-width: 550px;
       margin: 0 auto;
     }
 
@@ -605,14 +606,14 @@
 <body>
   <div class="container">
     <header>
+      <div class="org-name">
+        <svg class="org-icon" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" />
+        </svg>
+        TRUNG TÂM Y TẾ THỦY NGUYÊN – PHÒNG KẾ HOẠCH – NGHIỆP VỤ
+      </div>
       <div class="banner">
-        <div class="org-name">
-          <svg class="org-icon" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" />
-          </svg>
-          TRUNG TÂM Y TẾ THỦY NGUYÊN – PHÒNG KẾ HOẠCH – NGHIỆP VỤ
-        </div>
         <h1 class="logo">Ứng dụng định dạng tự động quy trình kỹ thuật theo Quyết định 3023/QĐ-BYT</h1>
         <p class="tagline">Ứng dụng chỉ định dạng file, không thay đổi cấu trúc và nội dung file. Tải 1 hoặc nhiều file
           từ máy tính, điện thoại, hoặc Google Drive</p>
