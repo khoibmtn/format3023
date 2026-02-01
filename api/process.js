@@ -1,5 +1,4 @@
-import { processDocx, processMultipleDocx } from '../src/docx/processor.js';
-import archiver from 'archiver';
+import { processDocx } from '../src/docx/processor.js';
 
 // Vercel serverless handler
 export const config = {
@@ -9,58 +8,51 @@ export const config = {
 };
 
 export default async function handler(req, res) {
+    // Add CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
+        console.log('[API] Starting file processing...');
+
         // Parse multipart form data
         const { files } = await parseMultipartForm(req);
+        console.log('[API] Files received:', files.length);
 
         if (!files || files.length === 0) {
             return res.status(400).json({ error: 'No files uploaded' });
         }
 
-        const results = await processMultipleDocx(files);
-        const successfulResults = results.filter(r => r.success);
-        const failedResults = results.filter(r => !r.success);
+        // Process first file only for simplicity
+        const file = files[0];
+        console.log('[API] Processing:', file.name, 'size:', file.buffer.length);
 
-        if (successfulResults.length === 0) {
-            return res.status(500).json({
-                error: 'All files failed to process',
-                failures: failedResults
-            });
-        }
+        const processedBuffer = await processDocx(file.buffer);
+        console.log('[API] Processed, output size:', processedBuffer.length);
 
-        // If single file, return directly
-        if (successfulResults.length === 1 && failedResults.length === 0) {
-            const result = successfulResults[0];
-            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-            res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(result.name)}"`);
-            return res.send(result.buffer);
-        }
+        const outputName = file.name.replace(/\.docx$/i, '_processed.docx');
 
-        // Multiple files: return as ZIP
-        res.setHeader('Content-Type', 'application/zip');
-        res.setHeader('Content-Disposition', 'attachment; filename="processed_documents.zip"');
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(outputName)}`);
 
-        const archive = archiver('zip', { zlib: { level: 6 } });
-        archive.pipe(res);
-
-        for (const result of successfulResults) {
-            archive.append(result.buffer, { name: result.name });
-        }
-
-        if (failedResults.length > 0) {
-            const errorReport = failedResults.map(f => `${f.name}: ${f.error}`).join('\n');
-            archive.append(errorReport, { name: 'errors.txt' });
-        }
-
-        await archive.finalize();
+        return res.send(Buffer.from(processedBuffer));
 
     } catch (error) {
-        console.error('Processing error:', error);
-        res.status(500).json({ error: error.message });
+        console.error('[API] Processing error:', error);
+        return res.status(500).json({
+            error: 'Processing failed',
+            details: error.message,
+            stack: error.stack
+        });
     }
 }
 
@@ -75,9 +67,11 @@ async function parseMultipartForm(req) {
         const bb = busboy({ headers: req.headers });
 
         bb.on('file', (name, file, info) => {
-            const { filename, mimeType } = info;
+            const { filename } = info;
+            console.log('[API] Receiving file:', filename);
 
             if (!filename.toLowerCase().endsWith('.docx')) {
+                console.log('[API] Skipping non-docx file:', filename);
                 file.resume();
                 return;
             }
@@ -85,6 +79,7 @@ async function parseMultipartForm(req) {
             const chunks = [];
             file.on('data', chunk => chunks.push(chunk));
             file.on('end', () => {
+                console.log('[API] File received, chunks:', chunks.length);
                 files.push({
                     name: filename,
                     buffer: Buffer.concat(chunks)
@@ -92,8 +87,14 @@ async function parseMultipartForm(req) {
             });
         });
 
-        bb.on('close', () => resolve({ files }));
-        bb.on('error', reject);
+        bb.on('close', () => {
+            console.log('[API] Form parsing complete, files:', files.length);
+            resolve({ files });
+        });
+        bb.on('error', (err) => {
+            console.error('[API] Busboy error:', err);
+            reject(err);
+        });
 
         req.pipe(bb);
     });
