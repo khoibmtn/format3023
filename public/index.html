@@ -4,26 +4,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Format3023 - DOCX Processor</title>
+  <title>Định dạng DOCX theo QĐ 3023/BYT</title>
   <meta name="description" content="Process Microsoft Word documents with automated formatting">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #0a0a0f;
-      --bg-secondary: #12121a;
-      --bg-card: #1a1a24;
-      --text-primary: #f0f0f5;
-      --text-secondary: #8888a0;
-      --accent: #6366f1;
-      --accent-hover: #818cf8;
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --accent: #2563eb;
+      --accent-hover: #3b82f6;
       --success: #22c55e;
       --error: #ef4444;
       --warning: #f59e0b;
-      --border: rgba(255, 255, 255, 0.1);
-      --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+      --border: #e2e8f0;
+      --gradient-1: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+      --shadow-glow: 0 0 40px rgba(37, 99, 235, 0.2);
     }
 
     * {
@@ -491,6 +491,55 @@
       line-height: 1.5;
     }
 
+    /* Top Actions Bar */
+    .top-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .btn-back {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .btn-back:hover {
+      background: var(--bg-card);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-zip {
+      background: var(--accent);
+      border: none;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn-zip:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
     footer {
       margin-top: auto;
       padding-top: 3rem;
@@ -503,8 +552,8 @@
 <body>
   <div class="container">
     <header>
-      <h1 class="logo">Format3023</h1>
-      <p class="tagline">DOCX Document Processor</p>
+      <h1 class="logo">Định dạng văn bản</h1>
+      <p class="tagline">theo chuẩn Quyết định 3023/QĐ-BYT</p>
     </header>
 
     <!-- VIEW 1: Upload View -->
@@ -566,31 +615,34 @@
         <div class="processing-subtitle" id="processingSubtitle">Vui lòng đợi trong giây lát</div>
       </div>
 
+      <!-- Top action bar: Back button (left) and Download All (right) -->
+      <div class="top-actions" id="topActions"
+        style="display: none; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <button class="btn-back" id="continueBtn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Xử lý file khác
+        </button>
+        <button class="btn-zip" id="downloadAllBtn" style="display: none;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Tải ZIP
+        </button>
+      </div>
+
       <div class="result-list" id="resultList"></div>
 
       <div class="summary-card" id="summaryCard" style="display: none;">
         <div class="summary-title" id="summaryTitle">✓ Hoàn thành!</div>
         <div class="summary-text" id="summaryText">Tất cả file đã được xử lý thành công</div>
-        <div class="summary-actions">
-          <button class="btn btn-success" id="downloadAllBtn" style="display: none;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            Tải tất cả (ZIP)
-          </button>
-          <button class="btn btn-secondary" id="continueBtn">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-            Tiếp tục xử lý file khác
-          </button>
-        </div>
       </div>
     </div>
   </div>
 
-  <footer>Format3023 &copy; 2026 — OpenXML-based document processing</footer>
+  <footer>Phòng Kế hoạch - Nghiệp vụ — Trung tâm Y tế Thủy Nguyên @2026</footer>
 
   <script>
     // Elements
@@ -610,6 +662,7 @@
     const summaryText = document.getElementById('summaryText');
     const downloadAllBtn = document.getElementById('downloadAllBtn');
     const continueBtn = document.getElementById('continueBtn');
+    const topActions = document.getElementById('topActions');
 
     let files = [];
     let processedResults = [];
@@ -821,6 +874,9 @@
       processingTitle.textContent = 'Xử lý hoàn tất!';
       processingSubtitle.textContent = '';
 
+      // Show top action bar
+      topActions.style.display = 'flex';
+
       summaryCard.style.display = 'block';
 
       if (errorCount === 0) {
@@ -871,6 +927,7 @@
       renderFileList();
       summaryCard.style.display = 'none';
       downloadAllBtn.style.display = 'none';
+      topActions.style.display = 'none';
       resultList.innerHTML = '';
       showView('uploadView');
     });
