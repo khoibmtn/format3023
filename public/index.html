@@ -34,19 +34,31 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f1f5f9;
+      background: white;
       color: var(--text-primary);
       min-height: 100vh;
-      padding: 2rem;
+      margin: 0;
+      padding: 0;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
+    /* Header Section - White background */
+    .header-section {
       background: white;
-      border-radius: 16px;
+      padding: 1.5rem 2rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Content Section - Gray background */
+    .content-section {
+      background: #f1f5f9;
       padding: 2rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      min-height: calc(100vh - 200px);
+    }
+
+    .content-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     /* Header - Organization Name */
@@ -54,7 +66,7 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid #e2e8f0;
     }
@@ -76,11 +88,11 @@
     /* Main Content */
     .main-content {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 0;
     }
 
     .main-title {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 700;
       color: #1e3a5f;
       margin-bottom: 0.75rem;
@@ -91,7 +103,7 @@
       color: #64748b;
       font-size: 0.95rem;
       line-height: 1.6;
-      max-width: 550px;
+      max-width: 600px;
       margin: 0 auto;
     }
 
@@ -614,7 +626,8 @@
 </head>
 
 <body>
-  <div class="container">
+  <!-- Header Section - White Background -->
+  <div class="header-section">
     <!-- Organization Header - Top Left -->
     <div class="org-header">
       <svg class="org-icon" fill="currentColor" viewBox="0 0 24 24">
@@ -630,103 +643,111 @@
       <p class="main-desc">Ứng dụng chỉ định dạng file, không thay đổi cấu trúc và nội dung file. Tải 1 hoặc nhiều file
         từ máy tính, điện thoại, hoặc google driver</p>
     </div>
-
-    <!-- VIEW 1: Upload View -->
-    <div class="view active" id="uploadView">
-      <div class="upload-zone" id="uploadZone">
-        <input type="file" id="fileInput" accept=".docx" multiple>
-        <div class="upload-icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-          </svg>
-        </div>
-        <div class="upload-title">Kéo thả file quy trình có định dạng DOCX vào đây</div>
-        <div class="upload-subtitle">
-          <span class="upload-link">Nhấn để chọn file từ máy tính</span>
-          <span class="upload-separator">hoặc</span>
-          <span class="gdrive-link" id="gdriveBtn">
-            chọn từ google driver
-            <svg class="gdrive-icon" viewBox="0 0 24 24" width="20" height="20">
-              <circle cx="12" cy="12" r="10" fill="#ea4335" />
-              <path d="M12 6l4 7H8l4-7z" fill="white" />
-              <path d="M8 13l-2 4h12l-2-4H8z" fill="white" />
-            </svg>
-          </span>
-        </div>
-      </div>
-
-      <div class="actions" id="uploadActions" style="display: none;">
-        <button class="btn btn-secondary" id="clearBtn">
-          <svg fill="none" stroke="#ef4444" viewBox="0 0 24 24" width="18" height="18">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-          </svg>
-          Xóa tất cả
-        </button>
-        <button class="btn btn-primary" id="processBtn">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-          Xử lý file
-        </button>
-      </div>
-
-      <div class="file-list" id="fileList"></div>
-
-      <div class="features" id="featuresSection">
-        <div class="feature">
-          <div class="feature-title">📝 Xử lý văn bản</div>
-          <div class="feature-desc">Chuyển ngắt dòng thành đoạn văn, chuẩn hóa dấu gạch ngang</div>
-        </div>
-        <div class="feature">
-          <div class="feature-title">🔤 Chuẩn hóa font</div>
-          <div class="feature-desc">Thiết lập Times New Roman 14pt làm font mặc định</div>
-        </div>
-        <div class="feature">
-          <div class="feature-title">📐 Định dạng đoạn</div>
-          <div class="feature-desc">Áp dụng giãn dòng, canh lề, thụt đầu dòng</div>
-        </div>
-        <div class="feature">
-          <div class="feature-title">✨ Giữ nguyên định dạng</div>
-          <div class="feature-desc">Bảo toàn in đậm, nghiêng, gạch chân và tất cả định dạng khác</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 2: Processing/Results View -->
-    <div class="view" id="resultsView">
-      <div class="processing-header">
-        <div class="processing-title" id="processingTitle">Đang xử lý...</div>
-        <div class="processing-subtitle" id="processingSubtitle">Vui lòng đợi trong giây lát</div>
-      </div>
-
-      <!-- Top action bar: Back button (left) and Download All (right) -->
-      <div class="top-actions" id="topActions"
-        style="display: none; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <button class="btn-back" id="continueBtn">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Xử lý file khác
-        </button>
-        <button class="btn-zip" id="downloadAllBtn" style="display: none;">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          Tải tất cả (ZIP)
-        </button>
-      </div>
-
-      <div class="result-list" id="resultList"></div>
-
-      <div class="summary-card" id="summaryCard" style="display: none;">
-        <div class="summary-title" id="summaryTitle">✓ Hoàn thành!</div>
-        <div class="summary-text" id="summaryText">Tất cả file đã được xử lý thành công</div>
-      </div>
-    </div>
   </div>
+
+  <!-- Content Section - Gray Background -->
+  <div class="content-section">
+    <div class="content-wrapper">
+      <!-- VIEW 1: Upload View -->
+      <div class="view active" id="uploadView">
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="fileInput" accept=".docx" multiple>
+          <div class="upload-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+          </div>
+          <div class="upload-title">Kéo thả file quy trình có định dạng DOCX vào đây</div>
+          <div class="upload-subtitle">
+            <span class="upload-link">Nhấn để chọn file từ máy tính</span>
+            <span class="upload-separator">hoặc</span>
+            <span class="gdrive-link" id="gdriveBtn">
+              chọn từ google driver
+              <svg class="gdrive-icon" viewBox="0 0 24 24" width="20" height="20">
+                <circle cx="12" cy="12" r="10" fill="#ea4335" />
+                <path d="M12 6l4 7H8l4-7z" fill="white" />
+                <path d="M8 13l-2 4h12l-2-4H8z" fill="white" />
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="actions" id="uploadActions" style="display: none;">
+          <button class="btn btn-secondary" id="clearBtn">
+            <svg fill="none" stroke="#ef4444" viewBox="0 0 24 24" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            Xóa tất cả
+          </button>
+          <button class="btn btn-primary" id="processBtn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Xử lý file
+          </button>
+        </div>
+
+        <div class="file-list" id="fileList"></div>
+
+        <div class="features" id="featuresSection">
+          <div class="feature">
+            <div class="feature-title">📝 Xử lý văn bản</div>
+            <div class="feature-desc">Chuyển ngắt dòng thành đoạn văn, chuẩn hóa dấu gạch ngang</div>
+          </div>
+          <div class="feature">
+            <div class="feature-title">🔤 Chuẩn hóa font</div>
+            <div class="feature-desc">Thiết lập Times New Roman 14pt làm font mặc định</div>
+          </div>
+          <div class="feature">
+            <div class="feature-title">📐 Định dạng đoạn</div>
+            <div class="feature-desc">Áp dụng giãn dòng, canh lề, thụt đầu dòng</div>
+          </div>
+          <div class="feature">
+            <div class="feature-title">✨ Giữ nguyên định dạng</div>
+            <div class="feature-desc">Bảo toàn in đậm, nghiêng, gạch chân và tất cả định dạng khác</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: Processing/Results View -->
+      <div class="view" id="resultsView">
+        <div class="processing-header">
+          <div class="processing-title" id="processingTitle">Đang xử lý...</div>
+          <div class="processing-subtitle" id="processingSubtitle">Vui lòng đợi trong giây lát</div>
+        </div>
+
+        <!-- Top action bar: Back button (left) and Download All (right) -->
+        <div class="top-actions" id="topActions"
+          style="display: none; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <button class="btn-back" id="continueBtn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Xử lý file khác
+          </button>
+          <button class="btn-zip" id="downloadAllBtn" style="display: none;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Tải tất cả (ZIP)
+          </button>
+        </div>
+
+        <div class="result-list" id="resultList"></div>
+
+        <div class="summary-card" id="summaryCard" style="display: none;">
+          <div class="summary-title" id="summaryTitle">✓ Hoàn thành!</div>
+          <div class="summary-text" id="summaryText">Tất cả file đã được xử lý thành công</div>
+        </div>
+      </div>
+    </div>
+    <!-- End content-wrapper -->
+  </div>
+  </div>
+  <!-- End content-section -->
 
   <footer>Phòng Kế hoạch - Nghiệp vụ — Trung tâm Y tế Thủy Nguyên @2026</footer>
 
