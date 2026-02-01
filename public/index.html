@@ -385,7 +385,25 @@
     /* Processing View */
     .processing-header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Top Actions - Green Header Box */
+    .top-actions {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .top-actions .status-text {
+      font-weight: 600;
+      color: #1e3a5f;
+      font-size: 1.1rem;
     }
 
     .processing-title {
@@ -402,22 +420,20 @@
       margin-top: 1rem;
       background: white;
       border-radius: 12px;
+      border: 1px solid #e2e8f0;
       padding: 0.75rem;
       max-height: 400px;
       overflow-y: auto;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     .result-item {
       background: white;
       border: 1px solid #e2e8f0;
-      border-left: 4px solid var(--success);
       border-radius: 8px;
-      padding: 0.6rem 0.75rem;
+      padding: 0.5rem 0.75rem;
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
     }
 
     .result-item:last-child {
@@ -429,6 +445,11 @@
       align-items: center;
       gap: 0.5rem;
       flex: 1;
+    }
+
+    .result-action {
+      margin-left: auto;
+      flex-shrink: 0;
     }
 
     .result-icon {
@@ -754,15 +775,15 @@
           <div class="processing-subtitle" id="processingSubtitle">Vui lòng đợi trong giây lát</div>
         </div>
 
-        <!-- Top action bar: Back button (left) and Download All (right) -->
-        <div class="top-actions" id="topActions"
-          style="display: none; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <!-- Top action bar: Green box with Back button (left), Status (center), Download All (right) -->
+        <div class="top-actions" id="topActions" style="display: none;">
           <button class="btn-back" id="continueBtn">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             Xử lý file khác
           </button>
+          <span class="status-text" id="statusText">Đang xử lý...</span>
           <button class="btn-zip" id="downloadAllBtn" style="display: none;">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -806,6 +827,8 @@
     const downloadAllBtn = document.getElementById('downloadAllBtn');
     const continueBtn = document.getElementById('continueBtn');
     const topActions = document.getElementById('topActions');
+    const statusText = document.getElementById('statusText');
+    const processingHeader = document.querySelector('.processing-header');
 
     let files = [];
     let processedResults = [];
@@ -1022,18 +1045,18 @@
     }
 
     function showSummary(successCount, errorCount) {
-      // Update processing title with count
-      if (errorCount === 0) {
-        processingTitle.textContent = `Đã xử lý thành công ${successCount} file(s)`;
-      } else if (successCount === 0) {
-        processingTitle.textContent = `Lỗi khi xử lý ${errorCount} file(s)`;
-      } else {
-        processingTitle.textContent = `Đã xử lý thành công ${successCount}/${successCount + errorCount} file(s)`;
-      }
-      processingSubtitle.textContent = '';
-
-      // Show top action bar
+      // Hide processing header and show green box
+      processingHeader.style.display = 'none';
       topActions.style.display = 'flex';
+
+      // Update status text in green box
+      if (errorCount === 0) {
+        statusText.textContent = `Đã xử lý thành công ${successCount} file(s)`;
+      } else if (successCount === 0) {
+        statusText.textContent = `Lỗi khi xử lý ${errorCount} file(s)`;
+      } else {
+        statusText.textContent = `Đã xử lý thành công ${successCount}/${successCount + errorCount} file(s)`;
+      }
 
       // Hide summary card - no longer needed
       summaryCard.style.display = 'none';
@@ -1077,6 +1100,7 @@
       summaryCard.style.display = 'none';
       downloadAllBtn.style.display = 'none';
       topActions.style.display = 'none';
+      processingHeader.style.display = 'block';
       resultList.innerHTML = '';
       showView('uploadView');
     });
