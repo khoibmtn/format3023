@@ -802,38 +802,18 @@
 
     async function downloadFile(filename, blob) {
       try {
-        if ('showSaveFilePicker' in window) {
-          // Determine file type based on extension
-          const isZip = filename.toLowerCase().endsWith('.zip');
-          const types = isZip ? [{
-            description: 'ZIP Archive',
-            accept: { 'application/zip': ['.zip'] }
-          }] : [{
-            description: 'Word Document',
-            accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] }
-          }];
-
-          const handle = await window.showSaveFilePicker({
-            suggestedName: filename,
-            types: types
-          });
-          const writable = await handle.createWritable();
-          await writable.write(blob);
-          await writable.close();
-        } else {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = filename;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }
+        // Use traditional download method to show in browser's download bar
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        // Delay revoking to ensure download starts
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
       } catch (error) {
-        if (error.name !== 'AbortError') {
-          console.error('Download error:', error);
-        }
+        console.error('Download error:', error);
       }
     }
 
