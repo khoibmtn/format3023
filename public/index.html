@@ -703,9 +703,10 @@
       <div class="org-header">
         <svg class="org-icon" fill="currentColor" viewBox="0 0 24 24">
           <path
-            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" />
+            d="M19 3H14.82C14.4 1.84 13.3 1 12 1S9.6 1.84 9.18 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM12 3C12.55 3 13 3.45 13 4S12.55 5 12 5 11 4.55 11 4 11.45 3 12 3ZM7 7H17V5H19V19H5V5H7V7ZM7 9V11H17V9H7ZM7 13V15H14V13H7Z" />
         </svg>
-        <span class="org-name">TRUNG TÂM Y TẾ THỦY NGUYÊN – PHÒNG KẾ HOẠCH – NGHIỆP VỤ</span>
+        <span class="org-name">TRUNG TÂM Y TẾ THỦY NGUYÊN: <span style="color: #a0522d;">PHÒNG KẾ HOẠCH – NGHIỆP
+            VỤ</span></span>
       </div>
     </div>
   </div>
@@ -1070,11 +1071,11 @@
 
       // Update status text in green box
       if (errorCount === 0) {
-        statusText.textContent = `Đã xử lý thành công ${successCount} file(s)`;
+        statusText.textContent = `Đã xử lý thành công ${successCount} file`;
       } else if (successCount === 0) {
-        statusText.textContent = `Lỗi khi xử lý ${errorCount} file(s)`;
+        statusText.textContent = `Lỗi khi xử lý ${errorCount} file`;
       } else {
-        statusText.textContent = `Đã xử lý thành công ${successCount}/${successCount + errorCount} file(s)`;
+        statusText.textContent = `Đã xử lý thành công ${successCount}/${successCount + errorCount} file`;
       }
 
       // Hide summary card - no longer needed
