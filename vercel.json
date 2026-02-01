@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "api/**/*.js",
+            "src": "api/process.js",
             "use": "@vercel/node"
         },
         {
@@ -12,8 +12,12 @@
     ],
     "routes": [
         {
-            "src": "/api/(.*)",
-            "dest": "/api/$1"
+            "src": "/api/process",
+            "dest": "/api/process.js",
+            "methods": [
+                "POST",
+                "OPTIONS"
+            ]
         },
         {
             "src": "/(.*)",
