@@ -219,9 +219,23 @@
       cursor: pointer;
     }
 
+    /* File Count Message */
+    .file-count-message {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      padding: 0.75rem 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .file-count-number {
+      font-weight: 700;
+      color: var(--accent);
+    }
+
     /* File List */
     .file-list {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       max-height: 300px;
       overflow-y: auto;
       padding-right: 0.5rem;
@@ -699,6 +713,10 @@
           </button>
         </div>
 
+        <div class="file-count-message" id="fileCountMessage" style="display: none;">
+          Bạn đã tải lên <span class="file-count-number" id="fileCountNumber">0</span> file .docx
+        </div>
+
         <div class="file-list" id="fileList"></div>
 
         <div class="features" id="featuresSection">
@@ -849,6 +867,13 @@
       `).join('');
 
       uploadActions.style.display = files.length > 0 ? 'flex' : 'none';
+
+      // Update file count message
+      const fileCountMessage = document.getElementById('fileCountMessage');
+      const fileCountNumber = document.getElementById('fileCountNumber');
+      fileCountMessage.style.display = files.length > 0 ? 'block' : 'none';
+      fileCountNumber.textContent = files.length;
+
       document.getElementById('featuresSection').style.display = files.length > 0 ? 'none' : 'grid';
     }
 
@@ -989,27 +1014,21 @@
     }
 
     function showSummary(successCount, errorCount) {
-      processingTitle.textContent = 'Xử lý hoàn tất!';
+      // Update processing title with count
+      if (errorCount === 0) {
+        processingTitle.textContent = `Đã xử lý thành công ${successCount} file(s)`;
+      } else if (successCount === 0) {
+        processingTitle.textContent = `Lỗi khi xử lý ${errorCount} file(s)`;
+      } else {
+        processingTitle.textContent = `Đã xử lý thành công ${successCount}/${successCount + errorCount} file(s)`;
+      }
       processingSubtitle.textContent = '';
 
       // Show top action bar
       topActions.style.display = 'flex';
 
-      summaryCard.style.display = 'block';
-
-      if (errorCount === 0) {
-        summaryTitle.textContent = `✓ Hoàn thành ${successCount} file`;
-        summaryText.textContent = 'Tất cả file đã được xử lý thành công';
-      } else if (successCount === 0) {
-        summaryTitle.textContent = '✗ Lỗi';
-        summaryText.textContent = `Không thể xử lý ${errorCount} file`;
-        summaryCard.style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%)';
-        summaryCard.style.borderColor = 'rgba(239, 68, 68, 0.3)';
-        summaryTitle.style.color = 'var(--error)';
-      } else {
-        summaryTitle.textContent = `✓ Hoàn thành ${successCount}/${successCount + errorCount} file`;
-        summaryText.textContent = `${errorCount} file không thể xử lý`;
-      }
+      // Hide summary card - no longer needed
+      summaryCard.style.display = 'none';
 
       // Show download all button if multiple successful files
       if (successCount > 1) {
