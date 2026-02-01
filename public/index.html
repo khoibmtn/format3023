@@ -34,60 +34,62 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-primary);
+      background: #f1f5f9;
       color: var(--text-primary);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       padding: 2rem;
     }
 
     .container {
-      max-width: 700px;
-      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .org-name {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #1e3a5f;
+    /* Header - Organization Name */
+    .org-header {
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 0.5rem;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e2e8f0;
     }
 
     .org-icon {
-      width: 22px;
-      height: 22px;
-      color: #2563eb;
+      width: 24px;
+      height: 24px;
+      color: #1e3a8a;
     }
 
-    .banner {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-      color: white;
-      padding: 1.5rem 2rem;
-      border-radius: 16px;
-    }
-
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 0.75rem;
-    }
-
-    .tagline {
-      color: rgba(255, 255, 255, 0.9);
+    .org-name {
       font-size: 0.9rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* Main Content */
+    .main-content {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .main-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e3a5f;
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .main-desc {
+      color: #64748b;
+      font-size: 0.95rem;
       line-height: 1.6;
       max-width: 550px;
       margin: 0 auto;
@@ -160,33 +162,41 @@
     .upload-subtitle {
       color: var(--text-secondary);
       font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
-    .upload-subtitle span {
+    .upload-link {
       color: var(--accent);
       font-weight: 500;
+      cursor: pointer;
     }
 
-    .gdrive-btn {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.5rem 0.75rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-primary);
+    .upload-link:hover {
+      text-decoration: underline;
+    }
+
+    .upload-separator {
+      color: #94a3b8;
+    }
+
+    .gdrive-link {
+      color: #64748b;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      transition: all 0.2s;
-      margin-top: 0.5rem;
+      gap: 0.35rem;
     }
 
-    .gdrive-btn:hover {
-      background: #f8fafc;
-      border-color: var(--accent);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    .gdrive-link:hover {
+      color: var(--accent);
+    }
+
+    .gdrive-icon {
+      vertical-align: middle;
     }
 
     #fileInput {
@@ -605,20 +615,21 @@
 
 <body>
   <div class="container">
-    <header>
-      <div class="org-name">
-        <svg class="org-icon" fill="currentColor" viewBox="0 0 24 24">
-          <path
-            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" />
-        </svg>
-        TRUNG TÂM Y TẾ THỦY NGUYÊN – PHÒNG KẾ HOẠCH – NGHIỆP VỤ
-      </div>
-      <div class="banner">
-        <h1 class="logo">Ứng dụng định dạng tự động quy trình kỹ thuật theo Quyết định 3023/QĐ-BYT</h1>
-        <p class="tagline">Ứng dụng chỉ định dạng file, không thay đổi cấu trúc và nội dung file. Tải 1 hoặc nhiều file
-          từ máy tính, điện thoại, hoặc Google Drive</p>
-      </div>
-    </header>
+    <!-- Organization Header - Top Left -->
+    <div class="org-header">
+      <svg class="org-icon" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" />
+      </svg>
+      <span class="org-name">TRUNG TÂM Y TẾ THỦY NGUYÊN – PHÒNG KẾ HOẠCH – NGHIỆP VỤ</span>
+    </div>
+
+    <!-- Main Content - Centered -->
+    <div class="main-content">
+      <h1 class="main-title">Ứng dụng định dạng tự động quy trình kỹ thuật theo Quyết định 3023/QĐ-BYT</h1>
+      <p class="main-desc">Ứng dụng chỉ định dạng file, không thay đổi cấu trúc và nội dung file. Tải 1 hoặc nhiều file
+        từ máy tính, điện thoại, hoặc google driver</p>
+    </div>
 
     <!-- VIEW 1: Upload View -->
     <div class="view active" id="uploadView">
@@ -632,26 +643,16 @@
         </div>
         <div class="upload-title">Kéo thả file quy trình có định dạng DOCX vào đây</div>
         <div class="upload-subtitle">
-          <span>Nhấn để chọn file từ máy tính</span>
-          <span style="margin: 0 0.5rem; color: var(--text-secondary);">hoặc</span>
-          <button class="gdrive-btn" id="gdriveBtn" type="button">
-            <svg width="18" height="18" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5l5.4 9.35z"
-                fill="#0066da" />
-              <path
-                d="M43.65 25l-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3L1.2 46.35c-.8 1.4-1.2 2.95-1.2 4.5h27.5l16.15-25.85z"
-                fill="#00ac47" />
-              <path
-                d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85L52.4 67.8l-8.75 15.15 13.75-6.15h16.15z"
-                fill="#ea4335" />
-              <path d="M43.65 25L29.9 1.2C28.55.4 27 0 25.35 0h-1.9c-1.65 0-3.2.4-4.55 1.2L43.65 25z" fill="#00832d" />
-              <path d="M59.85 53H87.3c0-1.55-.4-3.1-1.2-4.5L72.65 28.2c-.8-1.4-1.95-2.5-3.3-3.3L43.65 25l16.2 28z"
-                fill="#2684fc" />
-              <path d="M73.55 76.8l-13.7-23.8-16.2-28-13.75 23.8L43.65 77c.8 1.4 1.95 2.5 3.3 3.3l26.6-3.5z"
-                fill="#ffba00" />
+          <span class="upload-link">Nhấn để chọn file từ máy tính</span>
+          <span class="upload-separator">hoặc</span>
+          <span class="gdrive-link" id="gdriveBtn">
+            chọn từ google driver
+            <svg class="gdrive-icon" viewBox="0 0 24 24" width="20" height="20">
+              <circle cx="12" cy="12" r="10" fill="#ea4335" />
+              <path d="M12 6l4 7H8l4-7z" fill="white" />
+              <path d="M8 13l-2 4h12l-2-4H8z" fill="white" />
             </svg>
-            Chọn từ Google Drive
-          </button>
+          </span>
         </div>
       </div>
 
