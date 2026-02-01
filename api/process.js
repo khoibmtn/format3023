@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         const processedBuffer = await processDocx(file.buffer);
         console.log('[API] Processed, output size:', processedBuffer.length);
 
-        const outputName = file.name.replace(/\.docx$/i, '_processed.docx');
+        const outputName = file.name;
 
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(outputName)}`);

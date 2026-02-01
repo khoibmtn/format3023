@@ -746,7 +746,7 @@
           }
 
           // Always use original filename from client (preserves Vietnamese)
-          const filename = file.name.replace(/\.docx$/i, '_processed.docx');
+          const filename = file.name;
 
           const blob = await response.blob();
           processedResults.push({ name: filename, blob, success: true });
