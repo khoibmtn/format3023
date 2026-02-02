@@ -1,8 +1,8 @@
-import { DEFAULT_FONT, FONT_SIZE_14PT } from '../utils/constants.js';
+import { DEFAULT_FONT, FONT_SIZE_13PT } from '../utils/constants.js';
 
 /**
  * Apply font and size formatting to all runs in document
- * Sets Times New Roman 14pt for all text
+ * Sets Times New Roman 13pt for all text
  * 
  * @param {string} documentXml - The word/document.xml content
  * @returns {string} Modified document XML
@@ -22,9 +22,9 @@ export function formatRuns(documentXml) {
 function processFontAndSize(xml) {
     let result = xml;
 
-    // First, update existing w:sz elements to 14pt
-    result = result.replace(/<w:sz w:val="[^"]*"/g, `<w:sz w:val="${FONT_SIZE_14PT}"`);
-    result = result.replace(/<w:szCs w:val="[^"]*"/g, `<w:szCs w:val="${FONT_SIZE_14PT}"`);
+    // First, update existing w:sz elements to 13pt
+    result = result.replace(/<w:sz w:val="[^"]*"/g, `<w:sz w:val="${FONT_SIZE_13PT}"`);
+    result = result.replace(/<w:szCs w:val="[^"]*"/g, `<w:szCs w:val="${FONT_SIZE_13PT}"`);
 
     // Update existing w:rFonts to Times New Roman
     result = result.replace(
@@ -65,12 +65,12 @@ function addMissingSz(xml) {
 
         // Add w:sz if not present
         if (!content.includes('<w:sz')) {
-            newContent += `<w:sz w:val="${FONT_SIZE_14PT}"/>`;
+            newContent += `<w:sz w:val="${FONT_SIZE_13PT}"/>`;
         }
 
         // Add w:szCs if not present
         if (!content.includes('<w:szCs')) {
-            newContent += `<w:szCs w:val="${FONT_SIZE_14PT}"/>`;
+            newContent += `<w:szCs w:val="${FONT_SIZE_13PT}"/>`;
         }
 
         // Add w:rFonts if not present

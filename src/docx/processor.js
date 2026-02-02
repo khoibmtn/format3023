@@ -43,7 +43,7 @@ export async function processDocx(inputBuffer) {
             processedDoc = formatTitleParagraph(processedDoc);
             console.log('[PROCESSOR] After title format:', processedDoc.length);
 
-            // Apply run formatting (font 14pt, Times New Roman)
+            // Apply run formatting (font 13pt, Times New Roman)
             processedDoc = formatRuns(processedDoc);
             console.log('[PROCESSOR] After run format:', processedDoc.length);
 

@@ -1,9 +1,9 @@
 import { parseXml, buildXml } from './xml-utils.js';
-import { DEFAULT_FONT, FONT_SIZE_14PT } from '../utils/constants.js';
+import { DEFAULT_FONT, FONT_SIZE_13PT } from '../utils/constants.js';
 
 /**
  * Apply font normalization to document defaults
- * Sets Times New Roman 14pt as default without affecting run-level overrides
+ * Sets Times New Roman 13pt as default without affecting run-level overrides
  * 
  * @param {string} stylesXml - The word/styles.xml content
  * @returns {string} Modified styles XML
@@ -144,7 +144,7 @@ function applyDefaultFontSize(rPrContent) {
     if (szIndex === -1) {
         rPrContent.push({
             'w:sz': [{
-                ':@': { '@_w:val': String(FONT_SIZE_14PT) }
+                ':@': { '@_w:val': String(FONT_SIZE_13PT) }
             }]
         });
     } else {
@@ -154,7 +154,7 @@ function applyDefaultFontSize(rPrContent) {
             attrObj = { ':@': {} };
             sz.unshift(attrObj);
         }
-        attrObj[':@']['@_w:val'] = String(FONT_SIZE_14PT);
+        attrObj[':@']['@_w:val'] = String(FONT_SIZE_13PT);
     }
 
     // Set szCs (complex script font size)
@@ -163,7 +163,7 @@ function applyDefaultFontSize(rPrContent) {
     if (szCsIndex === -1) {
         rPrContent.push({
             'w:szCs': [{
-                ':@': { '@_w:val': String(FONT_SIZE_14PT) }
+                ':@': { '@_w:val': String(FONT_SIZE_13PT) }
             }]
         });
     } else {
@@ -173,6 +173,6 @@ function applyDefaultFontSize(rPrContent) {
             attrObj = { ':@': {} };
             szCs.unshift(attrObj);
         }
-        attrObj[':@']['@_w:val'] = String(FONT_SIZE_14PT);
+        attrObj[':@']['@_w:val'] = String(FONT_SIZE_13PT);
     }
 }

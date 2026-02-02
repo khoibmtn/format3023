@@ -6,8 +6,8 @@
 export const TWIPS_PER_PT = 20;
 export const TWIPS_PER_CM = 567;
 
-// Font size in half-points (14pt = 28 half-points)
-export const FONT_SIZE_14PT = 28;
+// Font size in half-points (13pt = 26 half-points)
+export const FONT_SIZE_13PT = 26;
 
 // Line spacing: 1.1 multiple (base 240 twips per line)
 export const LINE_SPACING_1_1 = 264; // 240 * 1.1
