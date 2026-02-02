@@ -12,7 +12,7 @@ import {
  * - Space before: 6pt, Space after: 0pt
  * - Right indent: 0.25cm
  * - First line indent: 1cm
- * - Left alignment (not justify)
+ * - Justify alignment (căn đều 2 bên)
  * 
  * @param {string} documentXml - The word/document.xml content
  * @returns {string} Modified document XML
@@ -72,7 +72,7 @@ function processIndentation(xml) {
 }
 
 /**
- * Process justification - set to LEFT alignment
+ * Process justification - set to JUSTIFY alignment (căn đều 2 bên)
  */
 function processAlignment(xml) {
     let result = xml;
@@ -82,9 +82,9 @@ function processAlignment(xml) {
     result = result.replace(/<w:jc[^>]*>[\s\S]*?<\/w:jc>/g, '');
     result = result.replace(/<\/w:jc>/g, '');  // orphan closing tags
 
-    // Add LEFT alignment before w:ind
-    // w:val="left" for left alignment
-    result = result.replace(/<w:ind/g, `<w:jc w:val="left"/><w:ind`);
+    // Add JUSTIFY alignment before w:ind
+    // w:val="both" for justify alignment (căn đều 2 bên)
+    result = result.replace(/<w:ind/g, `<w:jc w:val="both"/><w:ind`);
 
     return result;
 }
