@@ -9,7 +9,13 @@ import { DEFAULT_FONT, FONT_SIZE_13PT } from '../utils/constants.js';
  * @returns {string} Modified styles XML
  */
 export function normalizeFonts(stylesXml) {
-    const parsed = parseXml(stylesXml);
+    // First, remove all contextualSpacing elements using regex (before parsing)
+    // This ensures "Don't add a space between paragraphs of the same style" is disabled
+    let cleanedStylesXml = stylesXml;
+    cleanedStylesXml = cleanedStylesXml.replace(/<w:contextualSpacing[^>]*\/?>/g, '');
+    cleanedStylesXml = cleanedStylesXml.replace(/<w:contextualSpacing[^>]*>[\s\S]*?<\/w:contextualSpacing>/g, '');
+
+    const parsed = parseXml(cleanedStylesXml);
 
     // Find or create w:docDefaults
     processDocDefaults(parsed);

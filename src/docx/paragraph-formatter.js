@@ -20,6 +20,9 @@ import {
 export function formatParagraphs(documentXml) {
     let result = documentXml;
 
+    // 0. Remove contextualSpacing to ensure consistent paragraph spacing
+    result = removeContextualSpacing(result);
+
     // 1. Replace or add w:spacing with our values in all w:pPr elements
     result = processSpacing(result);
 
@@ -88,3 +91,19 @@ function processAlignment(xml) {
 
     return result;
 }
+
+/**
+ * Remove w:contextualSpacing to ensure consistent paragraph spacing
+ * This disables "Don't add a space between paragraphs of the same style"
+ */
+function removeContextualSpacing(xml) {
+    let result = xml;
+
+    // Remove all w:contextualSpacing elements (self-closing and with content)
+    result = result.replace(/<w:contextualSpacing[^>]*\/?>/g, '');
+    result = result.replace(/<w:contextualSpacing[^>]*>[\s\S]*?<\/w:contextualSpacing>/g, '');
+    result = result.replace(/<\/w:contextualSpacing>/g, '');  // orphan closing tags
+
+    return result;
+}
+
