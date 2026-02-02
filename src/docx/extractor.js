@@ -90,3 +90,13 @@ export function getStylesXml(files) {
 export function listXmlFiles(files) {
     return Object.keys(files).filter(f => f.endsWith('.xml'));
 }
+
+/**
+ * Get numbering.xml content from extracted files
+ * @param {Object} files - Extracted files map
+ * @returns {string} Numbering XML content
+ */
+export function getNumberingXml(files) {
+    return files['word/numbering.xml'] || null;
+}
+

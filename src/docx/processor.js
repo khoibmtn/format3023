@@ -1,9 +1,10 @@
-import { extractDocx, repackageDocx, getDocumentXml, getStylesXml } from './extractor.js';
+import { extractDocx, repackageDocx, getDocumentXml, getStylesXml, getNumberingXml } from './extractor.js';
 import { replaceText } from './text-replacer.js';
 import { formatSpecialParagraphs, formatTitleParagraph } from './special-formatter.js';
 import { formatParagraphs } from './paragraph-formatter.js';
 import { formatRuns } from './run-formatter.js';
 import { normalizeFonts } from './font-normalizer.js';
+import { convertListsToText } from './list-converter.js';
 
 /**
  * Process a DOCX file with all transformations
@@ -20,6 +21,9 @@ export async function processDocx(inputBuffer) {
 
     const modifiedFiles = {};
 
+    // Get numbering.xml for list conversion
+    const numberingXml = getNumberingXml(files);
+
     // 1. Process document.xml
     const documentXml = getDocumentXml(files);
     if (documentXml) {
@@ -27,6 +31,10 @@ export async function processDocx(inputBuffer) {
         let processedDoc = documentXml;
 
         try {
+            // Convert automatic bullets/numbering to plain text (FIRST, before other formatting)
+            processedDoc = convertListsToText(processedDoc, numberingXml);
+            console.log('[PROCESSOR] After list convert:', processedDoc.length);
+
             // Apply text replacements (line breaks → paragraph breaks, en dash → hyphen)
             processedDoc = replaceText(processedDoc);
             console.log('[PROCESSOR] After text replace:', processedDoc.length);
